@@ -1,0 +1,1014 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://Scripts/MainMenu/MainMenu.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/MainMenu/logo_proto.png" type="Texture" id=2]
+[ext_resource path="res://Fonts/MainMenuFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Scripts/MainMenu/BasicMenuButton.gd" type="Script" id=4]
+[ext_resource path="res://Scripts/MainMenu/ExitButton.gd" type="Script" id=5]
+[ext_resource path="res://Scripts/MainMenu/HostButton.gd" type="Script" id=6]
+[ext_resource path="res://Scripts/MainMenu/ConnectButton.gd" type="Script" id=7]
+[ext_resource path="res://Scripts/MainMenu/PortForwardingCheckBox.gd" type="Script" id=8]
+[ext_resource path="res://Scripts/MainMenu/PlayerList.gd" type="Script" id=9]
+[ext_resource path="res://Scripts/MainMenu/ChatMessages.gd" type="Script" id=10]
+[ext_resource path="res://Scripts/MainMenu/ChatLineEdit.gd" type="Script" id=11]
+[ext_resource path="res://Scripts/MainMenu/ShowFPSCheck.gd" type="Script" id=12]
+[ext_resource path="res://Scripts/MainMenu/FullscreenCheck.gd" type="Script" id=13]
+[ext_resource path="res://Scripts/MainMenu/VideoBackButton.gd" type="Script" id=14]
+[ext_resource path="res://Scripts/MainMenu/AudioBackButton.gd" type="Script" id=15]
+[ext_resource path="res://Scripts/MainMenu/AudioSlider.gd" type="Script" id=16]
+[ext_resource path="res://Scripts/MainMenu/PlayerControlsButton.gd" type="Script" id=17]
+[ext_resource path="res://Scripts/MainMenu/BackButtonControls.gd" type="Script" id=18]
+[ext_resource path="res://Scripts/MainMenu/ControlChangeButton.gd" type="Script" id=19]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = -120.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="TODO" type="Label" parent="."]
+margin_left = 315.009
+margin_top = 3.25924
+margin_right = 562.009
+margin_bottom = 119.259
+text = "Multiplayer Implementations of Above
+Colors Menu"
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Logo" type="Sprite" parent="."]
+position = Vector2( 153, 50 )
+texture = ExtResource( 2 )
+
+[node name="MainMenuSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="OfflineButton" type="Button" parent="MainMenuSet"]
+margin_left = 73.0
+margin_top = 125.0
+margin_right = 106.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Offline"
+script = ExtResource( 4 )
+state_to_set = "Offline"
+
+[node name="OnlineButton" type="Button" parent="MainMenuSet"]
+margin_left = 175.0
+margin_top = 125.0
+margin_right = 198.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Online"
+script = ExtResource( 4 )
+state_to_set = "Online"
+
+[node name="OptionsButton" type="Button" parent="MainMenuSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 221.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Options"
+script = ExtResource( 4 )
+state_to_set = "Options"
+
+[node name="EditorButton" type="Button" parent="MainMenuSet"]
+margin_left = 78.0
+margin_top = 175.0
+margin_right = 119.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Editor"
+
+[node name="ExitButton" type="Button" parent="MainMenuSet"]
+margin_left = 132.0
+margin_top = 210.0
+margin_right = 163.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Quit"
+script = ExtResource( 5 )
+
+[node name="OfflineSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="NewGameButton" type="Button" parent="OfflineSet"]
+margin_left = 60.0
+margin_top = 125.0
+margin_right = 114.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "New Game"
+script = ExtResource( 4 )
+state_to_set = "NewGame"
+
+[node name="LoadGameButton" type="Button" parent="OfflineSet"]
+margin_left = 175.0
+margin_top = 125.0
+margin_right = 234.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Load Game"
+script = ExtResource( 4 )
+state_to_set = "LoadGame"
+
+[node name="DeleteGameButton" type="Button" parent="OfflineSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 243.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Delete Game"
+script = ExtResource( 4 )
+state_to_set = "DeleteGame"
+
+[node name="BackButton" type="Button" parent="OfflineSet"]
+margin_left = 60.0
+margin_top = 175.0
+margin_right = 94.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="OnlineSet" type="Node2D" parent="."]
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="MultiplayerTabs" type="TabContainer" parent="OnlineSet"]
+margin_left = 2.0
+margin_right = 304.0
+margin_bottom = 130.0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="Options" type="Tabs" parent="OnlineSet/MultiplayerTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 27.0
+margin_right = -4.0
+margin_bottom = -4.0
+
+[node name="HostButton" type="Button" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_right = 12.0
+margin_bottom = 20.0
+custom_fonts/font = ExtResource( 3 )
+text = "Host"
+script = ExtResource( 6 )
+
+[node name="ConnectButton" type="Button" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 110.0
+margin_top = 32.0
+margin_right = 158.0
+margin_bottom = 52.0
+custom_fonts/font = ExtResource( 3 )
+text = "Connect"
+script = ExtResource( 7 )
+
+[node name="PortForwardingCheckBox" type="CheckBox" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 35.0
+margin_top = -2.0
+margin_right = 189.0
+margin_bottom = 22.0
+custom_fonts/font = ExtResource( 3 )
+text = "Attempt UPNP Port Forward"
+script = ExtResource( 8 )
+
+[node name="IPAddressEntry" type="LineEdit" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_top = 30.0
+margin_right = 100.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 3 )
+max_length = 15
+placeholder_text = "IP Address"
+
+[node name="UserNameEntry" type="LineEdit" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 218.0
+margin_right = 293.0
+margin_bottom = 24.0
+custom_fonts/font = ExtResource( 3 )
+max_length = 30
+placeholder_text = "User Name"
+
+[node name="KirbyNameEntry" type="LineEdit" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 218.0
+margin_top = 30.0
+margin_right = 293.0
+margin_bottom = 54.0
+custom_fonts/font = ExtResource( 3 )
+text = "Kirby"
+max_length = 5
+placeholder_text = "Kirby Name"
+
+[node name="ReadyButton" type="Button" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 233.0
+margin_top = 57.0
+margin_right = 273.0
+margin_bottom = 77.0
+custom_fonts/font = ExtResource( 3 )
+toggle_mode = true
+text = "Ready"
+
+[node name="BackButton" type="Button" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 236.0
+margin_top = 80.0
+margin_right = 270.0
+margin_bottom = 100.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="PortInfoLabel" type="Label" parent="OnlineSet/MultiplayerTabs/Options"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -9.0
+margin_right = -113.0
+custom_fonts/font = ExtResource( 3 )
+text = "For port forwarding, open port 5551"
+
+[node name="ServerStatusLabel" type="Label" parent="OnlineSet/MultiplayerTabs/Options"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -29.0
+margin_right = -235.0
+margin_bottom = -20.0
+custom_fonts/font = ExtResource( 3 )
+text = "Disconnected"
+
+[node name="VSeparator" type="VSeparator" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = 201.0
+margin_top = -3.0
+margin_right = 223.0
+margin_bottom = 101.0
+
+[node name="HSeparator" type="HSeparator" parent="OnlineSet/MultiplayerTabs/Options"]
+margin_left = -3.0
+margin_top = 23.0
+margin_right = 211.0
+margin_bottom = 27.0
+
+[node name="Players" type="Tabs" parent="OnlineSet/MultiplayerTabs"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 27.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="GridContainer" type="GridContainer" parent="OnlineSet/MultiplayerTabs/Players"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -2.0
+margin_bottom = 5.0
+custom_constants/vseparation = 10
+script = ExtResource( 9 )
+
+[node name="Chat" type="Tabs" parent="OnlineSet/MultiplayerTabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 4.0
+margin_top = 27.0
+margin_right = -4.0
+margin_bottom = -4.0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="OnlineSet/MultiplayerTabs/Chat"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="RichTextLabel" type="RichTextLabel" parent="OnlineSet/MultiplayerTabs/Chat/VBoxContainer"]
+margin_right = 294.0
+margin_bottom = 76.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.75
+custom_fonts/normal_font = ExtResource( 3 )
+scroll_following = true
+script = ExtResource( 10 )
+
+[node name="LineEdit" type="LineEdit" parent="OnlineSet/MultiplayerTabs/Chat/VBoxContainer"]
+margin_top = 80.0
+margin_right = 294.0
+margin_bottom = 99.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.15
+custom_fonts/font = ExtResource( 3 )
+placeholder_text = "Enter a message..."
+script = ExtResource( 11 )
+
+[node name="NewGameButton" type="Button" parent="OnlineSet"]
+margin_left = 60.0
+margin_top = 175.0
+margin_right = 114.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "New Game"
+script = ExtResource( 4 )
+state_to_set = "NewGame"
+
+[node name="LoadGameButton" type="Button" parent="OnlineSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 234.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Load Game"
+script = ExtResource( 4 )
+state_to_set = "LoadGame"
+
+[node name="OptionsSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="VideoButton" type="Button" parent="OptionsSet"]
+margin_left = 75.0
+margin_top = 125.0
+margin_right = 111.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Video"
+script = ExtResource( 4 )
+state_to_set = "Video"
+
+[node name="AudioButton" type="Button" parent="OptionsSet"]
+margin_left = 175.0
+margin_top = 125.0
+margin_right = 211.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Audio"
+script = ExtResource( 4 )
+state_to_set = "Audio"
+
+[node name="ControlsButton" type="Button" parent="OptionsSet"]
+margin_left = 75.0
+margin_top = 175.0
+margin_right = 126.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Controls"
+script = ExtResource( 4 )
+state_to_set = "Controls"
+
+[node name="ColorButton" type="Button" parent="OptionsSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 243.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Kirby Colors"
+
+[node name="BackButton" type="Button" parent="OptionsSet"]
+margin_left = 133.0
+margin_top = 210.0
+margin_right = 167.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="VideoSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="ShowFPSCheck" type="CheckBox" parent="VideoSet"]
+margin_left = 118.0
+margin_top = 125.0
+margin_right = 188.0
+margin_bottom = 149.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Show FPS"
+script = ExtResource( 12 )
+
+[node name="FullscreenCheck" type="CheckBox" parent="VideoSet"]
+margin_left = 113.0
+margin_top = 150.0
+margin_right = 193.0
+margin_bottom = 174.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Fullscreen"
+script = ExtResource( 13 )
+
+[node name="BackButton" type="Button" parent="VideoSet"]
+margin_left = 136.0
+margin_top = 180.0
+margin_right = 170.0
+margin_bottom = 200.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 14 )
+state_to_set = "Options"
+
+[node name="AudioSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackButton" type="Button" parent="AudioSet"]
+margin_left = 136.0
+margin_top = 200.0
+margin_right = 170.0
+margin_bottom = 220.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 15 )
+state_to_set = "Options"
+
+[node name="MasterAudioSlider" type="HSlider" parent="AudioSet"]
+margin_left = 65.0
+margin_top = 115.0
+margin_right = 241.0
+margin_bottom = 131.0
+min_value = 1.0
+max_value = 10000.0
+value = 10000.0
+rounded = true
+tick_count = 11
+ticks_on_borders = true
+script = ExtResource( 16 )
+
+[node name="MasterAudioLabel" type="Label" parent="AudioSet/MasterAudioSlider"]
+margin_top = -10.0
+margin_right = 176.0
+margin_bottom = 4.0
+custom_fonts/font = ExtResource( 3 )
+text = "Master Volume"
+align = 1
+
+[node name="MusicAudioSlider" type="HSlider" parent="AudioSet"]
+margin_left = 65.0
+margin_top = 145.0
+margin_right = 241.0
+margin_bottom = 161.0
+min_value = 1.0
+max_value = 10000.0
+value = 10000.0
+rounded = true
+tick_count = 11
+ticks_on_borders = true
+script = ExtResource( 16 )
+BusIndex = 1
+
+[node name="MusicAudioLabel" type="Label" parent="AudioSet/MusicAudioSlider"]
+margin_top = -10.0
+margin_right = 176.0
+margin_bottom = 4.0
+custom_fonts/font = ExtResource( 3 )
+text = "Music Volume"
+align = 1
+
+[node name="FXAudioSlider" type="HSlider" parent="AudioSet"]
+margin_left = 65.0
+margin_top = 175.0
+margin_right = 241.0
+margin_bottom = 191.0
+min_value = 1.0
+max_value = 10000.0
+value = 10000.0
+rounded = true
+tick_count = 11
+script = ExtResource( 16 )
+BusIndex = 2
+
+[node name="FXAudioLabel" type="Label" parent="AudioSet/FXAudioSlider"]
+margin_top = -10.0
+margin_right = 176.0
+margin_bottom = 4.0
+custom_fonts/font = ExtResource( 3 )
+text = "FX Volume"
+align = 1
+
+[node name="ControlsSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackButton" type="Button" parent="ControlsSet"]
+margin_left = 133.0
+margin_top = 210.0
+margin_right = 167.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+state_to_set = "Options"
+
+[node name="ControlsButton1" type="Button" parent="ControlsSet"]
+margin_left = 70.0
+margin_top = 125.0
+margin_right = 125.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 1"
+script = ExtResource( 17 )
+state_to_set = "SetControls"
+
+[node name="ControlsButton2" type="Button" parent="ControlsSet"]
+margin_left = 175.0
+margin_top = 125.0
+margin_right = 230.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 2"
+script = ExtResource( 17 )
+state_to_set = "SetControls"
+ID = 1
+
+[node name="ControlsButton3" type="Button" parent="ControlsSet"]
+margin_left = 70.0
+margin_top = 175.0
+margin_right = 125.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 3"
+script = ExtResource( 17 )
+state_to_set = "SetControls"
+ID = 2
+
+[node name="ControlsButton4" type="Button" parent="ControlsSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 230.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 4"
+script = ExtResource( 17 )
+state_to_set = "SetControls"
+ID = 3
+
+[node name="SetControlsSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackButton" type="Button" parent="SetControlsSet"]
+margin_left = 133.0
+margin_top = 210.0
+margin_right = 167.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 18 )
+use_prev_state = true
+
+[node name="ScrollContainer" type="ScrollContainer" parent="SetControlsSet"]
+margin_left = 38.0
+margin_top = 100.0
+margin_right = 268.0
+margin_bottom = 200.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SetControlsSet/ScrollContainer"]
+margin_right = 230.0
+margin_bottom = 167.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="ControlLabels" type="VBoxContainer" parent="SetControlsSet/ScrollContainer/HBoxContainer"]
+margin_right = 107.0
+margin_bottom = 167.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Button" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_right = 107.0
+margin_bottom = 15.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Left"
+flat = true
+
+[node name="Button2" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 19.0
+margin_right = 107.0
+margin_bottom = 34.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Right"
+flat = true
+
+[node name="Button3" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 38.0
+margin_right = 107.0
+margin_bottom = 53.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Up"
+flat = true
+
+[node name="Button4" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 57.0
+margin_right = 107.0
+margin_bottom = 72.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Down"
+flat = true
+
+[node name="Button5" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 76.0
+margin_right = 107.0
+margin_bottom = 91.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Jump"
+flat = true
+
+[node name="Button6" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 95.0
+margin_right = 107.0
+margin_bottom = 110.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Action"
+flat = true
+
+[node name="Button7" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 114.0
+margin_right = 107.0
+margin_bottom = 129.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Eject Ability"
+flat = true
+
+[node name="Button8" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 133.0
+margin_right = 107.0
+margin_bottom = 148.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Spawn - Despawn"
+flat = true
+
+[node name="Button9" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlLabels"]
+margin_top = 152.0
+margin_right = 107.0
+margin_bottom = 167.0
+focus_mode = 0
+custom_fonts/font = ExtResource( 3 )
+enabled_focus_mode = 0
+text = "Pause"
+flat = true
+
+[node name="ControlIndicators" type="VBoxContainer" parent="SetControlsSet/ScrollContainer/HBoxContainer"]
+margin_left = 111.0
+margin_right = 218.0
+margin_bottom = 167.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="left" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_right = 107.0
+margin_bottom = 15.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="right" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 19.0
+margin_right = 107.0
+margin_bottom = 34.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="up" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 38.0
+margin_right = 107.0
+margin_bottom = 53.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="down" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 57.0
+margin_right = 107.0
+margin_bottom = 72.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="jump" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 76.0
+margin_right = 107.0
+margin_bottom = 91.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="action" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 95.0
+margin_right = 107.0
+margin_bottom = 110.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="eject" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 114.0
+margin_right = 107.0
+margin_bottom = 129.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="spawn" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 133.0
+margin_right = 107.0
+margin_bottom = 148.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="pause" type="Button" parent="SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"]
+margin_top = 152.0
+margin_right = 107.0
+margin_bottom = 167.0
+custom_fonts/font = ExtResource( 3 )
+text = "Text"
+script = ExtResource( 19 )
+
+[node name="NewGameSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LineEdit" type="LineEdit" parent="NewGameSet"]
+margin_left = 2.0
+margin_top = 125.0
+margin_right = 304.0
+margin_bottom = 149.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+placeholder_text = "File Name"
+
+[node name="AcceptButton" type="Button" parent="NewGameSet"]
+margin_left = 85.0
+margin_top = 175.0
+margin_right = 128.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Accept"
+
+[node name="BackButton" type="Button" parent="NewGameSet"]
+margin_left = 25.0
+margin_top = 175.0
+margin_right = 59.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+use_prev_state = true
+
+[node name="GamesList" type="ScrollContainer" parent="NewGameSet"]
+editor/display_folded = true
+margin_left = 153.0
+margin_top = 162.0
+margin_right = 303.0
+margin_bottom = 237.0
+scroll_horizontal_enabled = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="NewGameSet/GamesList"]
+margin_right = 150.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 1
+
+[node name="Button" type="Button" parent="NewGameSet/GamesList/VBoxContainer"]
+margin_right = 138.0
+margin_bottom = 20.0
+
+[node name="Button2" type="Button" parent="NewGameSet/GamesList/VBoxContainer"]
+margin_top = 21.0
+margin_right = 138.0
+margin_bottom = 41.0
+
+[node name="Button3" type="Button" parent="NewGameSet/GamesList/VBoxContainer"]
+margin_top = 42.0
+margin_right = 138.0
+margin_bottom = 62.0
+
+[node name="Button4" type="Button" parent="NewGameSet/GamesList/VBoxContainer"]
+margin_top = 63.0
+margin_right = 138.0
+margin_bottom = 83.0
+
+[node name="LoadGameSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SavedGamesList" type="ScrollContainer" parent="LoadGameSet"]
+margin_left = 2.0
+margin_top = 100.0
+margin_right = 304.0
+margin_bottom = 175.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="LoadGameSet/SavedGamesList"]
+margin_right = 302.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 1
+
+[node name="Button" type="Button" parent="LoadGameSet/SavedGamesList/VBoxContainer"]
+margin_right = 290.0
+margin_bottom = 20.0
+
+[node name="Button2" type="Button" parent="LoadGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 21.0
+margin_right = 290.0
+margin_bottom = 41.0
+
+[node name="Button3" type="Button" parent="LoadGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 42.0
+margin_right = 290.0
+margin_bottom = 62.0
+
+[node name="Button4" type="Button" parent="LoadGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 63.0
+margin_right = 290.0
+margin_bottom = 83.0
+
+[node name="BackButton" type="Button" parent="LoadGameSet"]
+margin_left = 100.0
+margin_top = 210.0
+margin_right = 134.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+use_prev_state = true
+
+[node name="AcceptButton" type="Button" parent="LoadGameSet"]
+margin_left = 175.0
+margin_top = 210.0
+margin_right = 218.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Accept"
+
+[node name="GameInfoLabel" type="Label" parent="LoadGameSet"]
+margin_left = 2.0
+margin_top = 180.0
+margin_right = 304.0
+margin_bottom = 201.0
+custom_fonts/font = ExtResource( 3 )
+text = "File Name
+Game Name"
+align = 1
+
+[node name="DeleteGameSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="SavedGamesList" type="ScrollContainer" parent="DeleteGameSet"]
+editor/display_folded = true
+margin_left = 2.0
+margin_top = 100.0
+margin_right = 304.0
+margin_bottom = 175.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DeleteGameSet/SavedGamesList"]
+margin_right = 302.0
+margin_bottom = 83.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 1
+
+[node name="Button" type="Button" parent="DeleteGameSet/SavedGamesList/VBoxContainer"]
+margin_right = 290.0
+margin_bottom = 20.0
+
+[node name="Button2" type="Button" parent="DeleteGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 21.0
+margin_right = 290.0
+margin_bottom = 41.0
+
+[node name="Button3" type="Button" parent="DeleteGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 42.0
+margin_right = 290.0
+margin_bottom = 62.0
+
+[node name="Button4" type="Button" parent="DeleteGameSet/SavedGamesList/VBoxContainer"]
+margin_top = 63.0
+margin_right = 290.0
+margin_bottom = 83.0
+
+[node name="BackButton" type="Button" parent="DeleteGameSet"]
+margin_left = 100.0
+margin_top = 210.0
+margin_right = 134.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="DeleteButton" type="Button" parent="DeleteGameSet"]
+margin_left = 175.0
+margin_top = 210.0
+margin_right = 218.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Delete"
+
+[node name="GameInfoLabel" type="Label" parent="DeleteGameSet"]
+margin_left = 2.0
+margin_top = 180.0
+margin_right = 304.0
+margin_bottom = 201.0
+custom_fonts/font = ExtResource( 3 )
+text = "File Name
+Game Name"
+align = 1
+
+[node name="ConfirmDeleteSet" type="Node2D" parent="."]
+editor/display_folded = true
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="DeleteWarningLabel" type="Label" parent="ConfirmDeleteSet"]
+margin_left = 40.0
+margin_top = 125.0
+margin_right = 266.0
+margin_bottom = 134.0
+custom_fonts/font = ExtResource( 3 )
+text = "Are you sure you want to delete this save file?"
+
+[node name="BackButton" type="Button" parent="ConfirmDeleteSet"]
+margin_left = 100.0
+margin_top = 175.0
+margin_right = 134.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+
+[node name="DeleteButton" type="Button" parent="ConfirmDeleteSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 218.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Delete"
