@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=2]
+[gd_scene load_steps=21 format=2]
 
 [ext_resource path="res://Scripts/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/MainMenu/logo_proto.png" type="Texture" id=2]
@@ -19,6 +19,7 @@
 [ext_resource path="res://Scripts/MainMenu/PlayerControlsButton.gd" type="Script" id=17]
 [ext_resource path="res://Scripts/MainMenu/BackButtonControls.gd" type="Script" id=18]
 [ext_resource path="res://Scripts/MainMenu/ControlChangeButton.gd" type="Script" id=19]
+[ext_resource path="res://Scripts/MainMenu/PlayerColorsButton.gd" type="Script" id=20]
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -52,7 +53,6 @@ position = Vector2( 153, 50 )
 texture = ExtResource( 2 )
 
 [node name="MainMenuSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -106,7 +106,6 @@ text = "Quit"
 script = ExtResource( 5 )
 
 [node name="OfflineSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -152,6 +151,7 @@ text = "Back"
 script = ExtResource( 4 )
 
 [node name="OnlineSet" type="Node2D" parent="."]
+visible = false
 __meta__ = {
 "_edit_lock_": true
 }
@@ -163,7 +163,6 @@ margin_bottom = 130.0
 custom_fonts/font = ExtResource( 3 )
 
 [node name="Options" type="Tabs" parent="OnlineSet/MultiplayerTabs"]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -290,6 +289,7 @@ custom_constants/vseparation = 10
 script = ExtResource( 9 )
 
 [node name="Chat" type="Tabs" parent="OnlineSet/MultiplayerTabs"]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_left = 4.0
@@ -344,7 +344,6 @@ script = ExtResource( 4 )
 state_to_set = "LoadGame"
 
 [node name="OptionsSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -398,7 +397,6 @@ text = "Back"
 script = ExtResource( 4 )
 
 [node name="VideoSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -437,7 +435,6 @@ script = ExtResource( 14 )
 state_to_set = "Options"
 
 [node name="AudioSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -518,7 +515,6 @@ text = "FX Volume"
 align = 1
 
 [node name="ControlsSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -578,7 +574,6 @@ state_to_set = "SetControls"
 ID = 3
 
 [node name="SetControlsSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -779,8 +774,82 @@ custom_fonts/font = ExtResource( 3 )
 text = "Text"
 script = ExtResource( 19 )
 
+[node name="ColorsSet" type="Node2D" parent="."]
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="BackButton" type="Button" parent="ColorsSet"]
+margin_left = 133.0
+margin_top = 210.0
+margin_right = 167.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 4 )
+state_to_set = "Options"
+
+[node name="ColorsButton1" type="Button" parent="ColorsSet"]
+margin_left = 70.0
+margin_top = 125.0
+margin_right = 125.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 1"
+script = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+state_to_set = "SetColors"
+
+[node name="ColorsButton2" type="Button" parent="ColorsSet"]
+margin_left = 175.0
+margin_top = 125.0
+margin_right = 230.0
+margin_bottom = 145.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 2"
+script = ExtResource( 20 )
+state_to_set = "SetColors"
+ID = 1
+
+[node name="ColorsButton3" type="Button" parent="ColorsSet"]
+margin_left = 70.0
+margin_top = 175.0
+margin_right = 125.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 3"
+script = ExtResource( 20 )
+state_to_set = "SetColors"
+ID = 2
+
+[node name="ColorsButton4" type="Button" parent="ColorsSet"]
+margin_left = 175.0
+margin_top = 175.0
+margin_right = 230.0
+margin_bottom = 195.0
+custom_fonts/font = ExtResource( 3 )
+text = "Player 4"
+script = ExtResource( 20 )
+state_to_set = "SetColors"
+ID = 3
+
+[node name="SetColorsSet" type="Node2D" parent="."]
+
+[node name="BackButton" type="Button" parent="SetColorsSet"]
+margin_left = 133.0
+margin_top = 210.0
+margin_right = 167.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="NewGameSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -814,7 +883,6 @@ script = ExtResource( 4 )
 use_prev_state = true
 
 [node name="GamesList" type="ScrollContainer" parent="NewGameSet"]
-editor/display_folded = true
 margin_left = 153.0
 margin_top = 162.0
 margin_right = 303.0
@@ -848,7 +916,6 @@ margin_right = 138.0
 margin_bottom = 83.0
 
 [node name="LoadGameSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
@@ -915,14 +982,12 @@ Game Name"
 align = 1
 
 [node name="DeleteGameSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
 }
 
 [node name="SavedGamesList" type="ScrollContainer" parent="DeleteGameSet"]
-editor/display_folded = true
 margin_left = 2.0
 margin_top = 100.0
 margin_right = 304.0
@@ -982,7 +1047,6 @@ Game Name"
 align = 1
 
 [node name="ConfirmDeleteSet" type="Node2D" parent="."]
-editor/display_folded = true
 visible = false
 __meta__ = {
 "_edit_lock_": true
