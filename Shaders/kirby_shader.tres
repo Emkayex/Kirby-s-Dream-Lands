@@ -1,0 +1,62 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform vec4 test_col_1 : hint_color; // Color to test against
+uniform vec4 replacement_color_1 : hint_color; // Target color
+uniform vec4 test_col_2 : hint_color;
+uniform vec4 replacement_color_2 : hint_color;
+uniform vec4 test_col_3 : hint_color;
+uniform vec4 replacement_color_3 : hint_color;
+
+void fragment() {
+	// Get the texture color
+	vec4 out_col = texture(TEXTURE, UV);
+	
+	vec4 d4_1 = abs(out_col - test_col_1);
+	vec4 d4_2 = abs(out_col - test_col_2);
+	vec4 d4_3 = abs(out_col - test_col_3);
+	
+	float d_1 = max(max(d4_1.r, d4_1.g), d4_1.b);
+	float d_2 = max(max(d4_2.r, d4_2.g), d4_2.b);
+	float d_3 = max(max(d4_3.r, d4_3.g), d4_3.b);
+	
+	/*
+	if (out_col.rgb == test_col_1.rgb) {
+		out_col.rgb = replacement_color_1.rgb;
+	}
+	else if (out_col.rgb == test_col_2.rgb) {
+		out_col.rgb = replacement_color_2.rgb;
+	}
+	else if (out_col.rgb == test_col_3.rgb) {
+		out_col.rgb = replacement_color_3.rgb;
+	}
+	*/
+	
+	if (d_1 < 0.01)
+	{
+		out_col.rgb = replacement_color_1.rgb;
+	}
+	
+	else if (d_2 < 0.01)
+	{
+		out_col.rgb = replacement_color_2.rgb;
+	}
+	
+	else if (d_3 < 0.01)
+	{
+		out_col.rgb = replacement_color_3.rgb;
+	}
+	
+	COLOR = out_col;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/test_col_1 = Color( 0.988235, 0.760784, 0.894118, 1 )
+shader_param/replacement_color_1 = Color( 0.988235, 0.760784, 0.894118, 1 )
+shader_param/test_col_2 = Color( 0.988235, 0.431373, 0.8, 1 )
+shader_param/replacement_color_2 = Color( 0.988235, 0.431373, 0.8, 1 )
+shader_param/test_col_3 = Color( 0.0156863, 0.00784314, 0.0156863, 1 )
+shader_param/replacement_color_3 = null

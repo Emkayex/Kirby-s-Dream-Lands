@@ -6,4 +6,6 @@ func _ready():
 
 
 func _additional_processing():
-	Keymap.save_controls()
+	PlayerColors.save_colors()
+	PlayerColors.type_changing = "Normal"
+	PlayerColors.rank_changing = "Primary"

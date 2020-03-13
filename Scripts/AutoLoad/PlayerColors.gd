@@ -1,26 +1,91 @@
 extends Node
 
-func _ready():
-	pass # Replace with function body.
+
+const COLORS_FILE = "colors.spraypaint"
+
+
+signal player_colors_info_changed
+
+
+var active_player : int = 0 setget active_player_set # Stores which color set is being edited
+var type_changing : String = "Normal" setget type_changing_set
+var rank_changing : String = "Primary" setget rank_changing_set
+
 
 var PlayerColors = [
 	# Player 1 Colors
-	{"normal_primary" : "", "normal_secondary" : "", "normal_tertiary" : "",
-	"ability_primary" : "", "ability_secondary" : "", "ability_tertiary" : "",
-	"ice_primary" : "", "ice_secondary" : "", "ice_tertiary" : ""},
+	{"Normal_Primary" : [252, 194, 228], "Normal_Secondary" : [252, 110, 204], "Normal_Tertiary" : [4, 2, 4],
+	"Ability_Primary" : [252, 202, 196], "Ability_Secondary" : [252, 130, 116], "Ability_Tertiary" : [4, 2, 4],
+	"Ice_Primary" : [252, 254, 252], "Ice_Secondary" : [100, 174, 252], "Ice_Tertiary" : [20, 18, 164]},
 
 	# Player 2 Colors
-	{"normal_primary" : "", "normal_secondary" : "", "normal_tertiary" : "",
-	"ability_primary" : "", "ability_secondary" : "", "ability_tertiary" : "",
-	"ice_primary" : "", "ice_secondary" : "", "ice_tertiary" : ""},
+	{"Normal_Primary" : [0xfe, 0xeb, 0x2d], "Normal_Secondary" : [0xe7, 0x59, 0x19], "Normal_Tertiary" : [0x04, 0x02, 0x04],
+	"Ability_Primary" : [0xff, 0xf0, 0x60], "Ability_Secondary" : [0xff, 0x93, 0x62], "Ability_Tertiary" : [0x04, 0x02, 0x04],
+	"Ice_Primary" : [0xfc, 0xfc, 0xfc], "Ice_Secondary" : [0x58, 0xf8, 0x98], "Ice_Tertiary" : [0x2e, 0x82, 0x50]},
 
 	# Player 3 Colors
-	{"normal_primary" : "", "normal_secondary" : "", "normal_tertiary" : "",
-	"ability_primary" : "", "ability_secondary" : "", "ability_tertiary" : "",
-	"ice_primary" : "", "ice_secondary" : "", "ice_tertiary" : ""},
+	{"Normal_Primary" : [0, 0, 0], "Normal_Secondary" : [0, 0, 0], "Normal_Tertiary" : [0, 0, 0],
+	"Ability_Primary" : [0, 0, 0], "Ability_Secondary" : [0, 0, 0], "Ability_Tertiary" : [0, 0, 0],
+	"Ice_Primary" : [0, 0, 0], "Ice_Secondary" : [0, 0, 0], "Ice_Tertiary" : [0, 0, 0]},
 
 	# Player 4 Colors
-	{"normal_primary" : "", "normal_secondary" : "", "normal_tertiary" : "",
-	"ability_primary" : "", "ability_secondary" : "", "ability_tertiary" : "",
-	"ice_primary" : "", "ice_secondary" : "", "ice_tertiary" : ""}
+	{"Normal_Primary" : [0, 0, 0], "Normal_Secondary" : [0, 0, 0], "Normal_Tertiary" : [0, 0, 0],
+	"Ability_Primary" : [0, 0, 0], "Ability_Secondary" : [0, 0, 0], "Ability_Tertiary" : [0, 0, 0],
+	"Ice_Primary" : [0, 0, 0], "Ice_Secondary" : [0, 0, 0], "Ice_Tertiary" : [0, 0, 0]}
 ]
+
+
+func load_colors():
+	var colors_file = File.new()
+	var colors_file_path = Global.OPTIONS_DIR + "//" + COLORS_FILE
+
+	# Create variable to hold parsed JSON data
+	var dataJSON = JSONParseResult.new()
+
+	# Check if the controls file has already been generated from a previous game
+	if colors_file.file_exists(colors_file_path):
+
+		# Load raw text from controls file
+		colors_file.open(colors_file_path, File.READ)
+		var content = colors_file.get_as_text()
+		colors_file.close()
+
+		# Parse raw text as JSON
+		dataJSON = JSON.parse(content)
+
+		# Set the control map equal to the parsed JSON
+		PlayerColors = dataJSON.result
+
+	# Generate a default controls file if one hasn't been created
+	else:
+		save_colors()
+
+
+func save_colors():
+	var colors_file = File.new()
+	var colors_file_path = Global.OPTIONS_DIR + "//" + COLORS_FILE
+
+	# Controls dictionary stored as JSON
+	var dataJSON = JSON.print(PlayerColors)
+
+	colors_file.open(colors_file_path, File.WRITE)
+	colors_file.store_string(dataJSON)
+	colors_file.close()
+
+
+func active_player_set(id):
+	active_player = id
+	emit_signal("player_colors_info_changed")
+
+
+func type_changing_set(type):
+	type_changing = type
+	emit_signal("player_colors_info_changed")
+
+
+func rank_changing_set(rank):
+	rank_changing = rank
+	emit_signal("player_colors_info_changed")
+
+func _ready():
+	load_colors()

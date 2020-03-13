@@ -37,6 +37,7 @@ Global="*res://Scripts/AutoLoad/Global.gd"
 Sound="*res://Scripts/AutoLoad/Sound.gd"
 SaveData="*res://Scripts/AutoLoad/SaveData.gd"
 Keymap="*res://Scripts/AutoLoad/Keymap.gd"
+PlayerColors="*res://Scripts/AutoLoad/PlayerColors.gd"
 
 [display]
 

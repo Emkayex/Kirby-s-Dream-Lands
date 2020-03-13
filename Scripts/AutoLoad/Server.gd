@@ -2,7 +2,7 @@ extends Node
 
 const PORT = 5551 # Known unassigned port safe to use
 const MAX_PLAYERS = 4 # Limit the number of allowed players to 4
-const UPNP_SERVICE_NAME = "Kirby Godot"
+const UPNP_SERVICE_NAME = "Kirby's Dream Lands"
 
 var upnp_port_forward = false
 var connected = false
