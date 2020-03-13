@@ -3,8 +3,8 @@ extends GridContainer
 const MENU_FONT = preload("res://Fonts/MainMenuFont.tres")
 
 func _ready():
-	Server.connect("player_connected", self, "_player_connected")
-	Server.connect("player_disconnected", self, "_player_disconnected")
+	var _err = Server.connect("player_connected", self, "_player_connected")
+	_err = Server.connect("player_disconnected", self, "_player_disconnected")
 
 
 func _player_connected(id):

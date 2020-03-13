@@ -1,7 +1,7 @@
 extends LineEdit
 
 func _ready():
-	connect("text_entered", self, "_text_entered")
+	var _err = connect("text_entered", self, "_text_entered")
 
 
 func _text_entered(new_text):

@@ -24,14 +24,14 @@ var PlayerColors = [
 	"Ice_Primary" : [0xfc, 0xfc, 0xfc], "Ice_Secondary" : [0x58, 0xf8, 0x98], "Ice_Tertiary" : [0x2e, 0x82, 0x50]},
 
 	# Player 3 Colors
-	{"Normal_Primary" : [0, 0, 0], "Normal_Secondary" : [0, 0, 0], "Normal_Tertiary" : [0, 0, 0],
-	"Ability_Primary" : [0, 0, 0], "Ability_Secondary" : [0, 0, 0], "Ability_Tertiary" : [0, 0, 0],
-	"Ice_Primary" : [0, 0, 0], "Ice_Secondary" : [0, 0, 0], "Ice_Tertiary" : [0, 0, 0]},
+	{"Normal_Primary" : [255, 0, 57], "Normal_Secondary" : [127, 0, 0], "Normal_Tertiary" : [4, 2, 4],
+	"Ability_Primary" : [251, 124, 111], "Ability_Secondary" : [196, 26, 6], "Ability_Tertiary" : [4, 2, 4],
+	"Ice_Primary" : [240, 224, 232], "Ice_Secondary" : [232, 80, 72], "Ice_Tertiary" : [100, 13, 9]},
 
 	# Player 4 Colors
-	{"Normal_Primary" : [0, 0, 0], "Normal_Secondary" : [0, 0, 0], "Normal_Tertiary" : [0, 0, 0],
-	"Ability_Primary" : [0, 0, 0], "Ability_Secondary" : [0, 0, 0], "Ability_Tertiary" : [0, 0, 0],
-	"Ice_Primary" : [0, 0, 0], "Ice_Secondary" : [0, 0, 0], "Ice_Tertiary" : [0, 0, 0]}
+	{"Normal_Primary" : [131, 130, 132], "Normal_Secondary" : [82, 81, 82], "Normal_Tertiary" : [4, 2, 4],
+	"Ability_Primary" : [189, 186, 189], "Ability_Secondary" : [82, 81, 82], "Ability_Tertiary" : [4, 2, 4],
+	"Ice_Primary" : [255, 251, 255], "Ice_Secondary" : [255, 0, 57], "Ice_Tertiary" : [82, 81, 82]}
 ]
 
 

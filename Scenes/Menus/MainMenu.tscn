@@ -42,8 +42,7 @@ margin_left = 315.009
 margin_top = 3.25924
 margin_right = 562.009
 margin_bottom = 119.259
-text = "Multiplayer Implementations of Above
-Default Colors"
+text = "Multiplayer Implementations of Above"
 __meta__ = {
 "_edit_lock_": true
 }
