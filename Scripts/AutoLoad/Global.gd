@@ -28,6 +28,7 @@ func save_as_json(folder_path : String, file_name : String, dataStruct):
 	
 	# Dictionary stored as JSON
 	var dataJSON = JSON.print(dataStruct)
+	dataJSON = format_json(dataJSON)
 	
 	# Write the JSON to a file
 	file.open(file_path, File.WRITE)
@@ -63,6 +64,16 @@ func load_from_json(folder_path : String, file_name : String) -> Dictionary:
 		returnData.exists = true
 	
 	return returnData
+
+
+func format_json(jsonString : String) -> String:
+	var returnString = jsonString.replacen("{", "{\n")
+	returnString = returnString.replacen("}", "\n}")
+	returnString = returnString.replacen("[", "[\n")
+	returnString = returnString.replacen("]", "\n]")
+	returnString = returnString.replacen(",", ",\n")
+	
+	return returnString
 
 
 func xor(term_1, term_2):
