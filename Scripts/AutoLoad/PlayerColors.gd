@@ -36,41 +36,18 @@ var PlayerColors = [
 
 
 func load_colors():
-	var colors_file = File.new()
-	var colors_file_path = Global.OPTIONS_DIR + "//" + COLORS_FILE
-
-	# Create variable to hold parsed JSON data
-	var dataJSON = JSONParseResult.new()
-
-	# Check if the controls file has already been generated from a previous game
-	if colors_file.file_exists(colors_file_path):
-
-		# Load raw text from controls file
-		colors_file.open(colors_file_path, File.READ)
-		var content = colors_file.get_as_text()
-		colors_file.close()
-
-		# Parse raw text as JSON
-		dataJSON = JSON.parse(content)
-
-		# Set the control map equal to the parsed JSON
-		PlayerColors = dataJSON.result
-
+	var data = Global.load_from_json(Global.OPTIONS_DIR, COLORS_FILE)
+	
+	if data.exists:
+		PlayerColors = data.result
+	
 	# Generate a default controls file if one hasn't been created
 	else:
 		save_colors()
 
 
 func save_colors():
-	var colors_file = File.new()
-	var colors_file_path = Global.OPTIONS_DIR + "//" + COLORS_FILE
-
-	# Controls dictionary stored as JSON
-	var dataJSON = JSON.print(PlayerColors)
-
-	colors_file.open(colors_file_path, File.WRITE)
-	colors_file.store_string(dataJSON)
-	colors_file.close()
+	Global.save_as_json(Global.OPTIONS_DIR, COLORS_FILE, PlayerColors)
 
 
 func active_player_set(id):

@@ -5,15 +5,8 @@ const SAVE_DIR = "user://SavedGames"
 var saved_games = {}
 
 func _ready():
-	initialize_save_folder()
+	Global.initialize_folder(SAVE_DIR)
 	retrieve_saved_games()
-
-
-# Check if a saved games folder exists yet and create it if it doesn't
-func initialize_save_folder():
-	var working_dir = Directory.new()
-	if not(working_dir.dir_exists(SAVE_DIR)):
-		working_dir.make_dir(SAVE_DIR)
 
 
 # Iterate through the saved games list and retrieve all file names and associated games

@@ -50,25 +50,10 @@ func _ready():
 
 
 func load_controls():
-	var controls_file = File.new()
-	var controls_file_path = Global.OPTIONS_DIR + "//" + KEYMAP_FILE
-
-	# Create variable to hold parsed JSON data
-	var dataJSON = JSONParseResult.new()
-
-	# Check if the controls file has already been generated from a previous game
-	if controls_file.file_exists(controls_file_path):
-
-		# Load raw text from controls file
-		controls_file.open(controls_file_path, File.READ)
-		var content = controls_file.get_as_text()
-		controls_file.close()
-
-		# Parse raw text as JSON
-		dataJSON = JSON.parse(content)
-
-		# Set the control map equal to the parsed JSON
-		PlayerControls = dataJSON.result
+	var data = Global.load_from_json(Global.OPTIONS_DIR, KEYMAP_FILE)
+	
+	if data.exists:
+		PlayerControls = data.result
 
 	# Generate a default controls file if one hasn't been created
 	else:
@@ -76,15 +61,7 @@ func load_controls():
 
 
 func save_controls():
-	var controls_file = File.new()
-	var controls_file_path = Global.OPTIONS_DIR + "//" + KEYMAP_FILE
-
-	# Controls dictionary stored as JSON
-	var dataJSON = JSON.print(PlayerControls)
-
-	controls_file.open(controls_file_path, File.WRITE)
-	controls_file.store_string(dataJSON)
-	controls_file.close()
+	Global.save_as_json(Global.OPTIONS_DIR, KEYMAP_FILE, PlayerControls)
 
 
 func get_pressed_key():
