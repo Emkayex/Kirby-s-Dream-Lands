@@ -39,3 +39,7 @@ func save_video_settings():
 	video_dict["fullscreen"] = OS.window_fullscreen
 	
 	Global.save_as_json(Global.OPTIONS_DIR, VIDEO_FILE, video_dict)
+
+
+func start_game():
+	print("Starting Game")

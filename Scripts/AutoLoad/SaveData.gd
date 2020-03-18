@@ -2,7 +2,9 @@ extends Node
 
 const SAVE_DIR = "user://SavedGames"
 
-var saved_games = {}
+var SavedGames = {}
+
+var CurrentSaveData = {}
 
 func _ready():
 	Global.initialize_folder(SAVE_DIR)
@@ -11,7 +13,7 @@ func _ready():
 
 # Iterate through the saved games list and retrieve all file names and associated games
 func retrieve_saved_games():
-	saved_games = {} # Start by clearing the current list of saved games
+	SavedGames = {} # Start by clearing the current list of saved games
 	
 	# Open the SavedGames directory
 	var working_dir = Directory.new()

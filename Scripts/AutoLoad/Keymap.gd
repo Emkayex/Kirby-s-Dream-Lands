@@ -25,6 +25,7 @@ var PlayerControls = [
 	"jump" : "", "action" : "", "pause" : "", "eject" : "",
 	"spawn" : ""}
 ]
+
 var ActivePlayer = 0 # Stores which control set is being edited
 var ControlToChange = "" # Stores the action being changed
 
