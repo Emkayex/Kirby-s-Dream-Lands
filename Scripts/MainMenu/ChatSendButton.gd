@@ -1,10 +1,10 @@
 extends Button
 
-export var ChatLineEditPath : NodePath
+export var chat_line_edit_path : NodePath
 
 func _ready():
 	var _err = connect("pressed", self, "_on_pressed")
 
 
 func _on_pressed():
-	get_node(ChatLineEditPath).call_deferred("_text_entered")
+	get_node(chat_line_edit_path).call_deferred("_text_entered")
