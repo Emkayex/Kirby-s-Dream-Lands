@@ -5,5 +5,6 @@ func _ready():
 
 
 func _text_entered(new_text):
-	Server.send_msg(new_text)
-	text = ""
+	if (new_text != ""):
+		Server.send_msg(new_text)
+		text = ""
