@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=38 format=2]
 
 [ext_resource path="res://Scripts/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/MainMenu/logo_proto.png" type="Texture" id=2]
@@ -33,9 +33,72 @@
 [ext_resource path="res://Scripts/MainMenu/MirrorLabelText.gd" type="Script" id=31]
 [ext_resource path="res://Scripts/MainMenu/DisconnectButton.gd" type="Script" id=32]
 [ext_resource path="res://Scripts/MainMenu/LineEditLimitCharacters.gd" type="Script" id=33]
+[ext_resource path="res://Scenes/Menus/PlayerInfoNew.tscn" type="PackedScene" id=34]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.952941, 0.658824, 1, 1 )
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+uniform vec4 test_col_1 : hint_color; // Color to test against
+uniform vec4 replacement_color_1 : hint_color; // Target color
+uniform vec4 test_col_2 : hint_color;
+uniform vec4 replacement_color_2 : hint_color;
+uniform vec4 test_col_3 : hint_color;
+uniform vec4 replacement_color_3 : hint_color;
+
+void fragment() {
+	// Get the texture color
+	vec4 out_col = texture(TEXTURE, UV);
+	
+	vec4 d4_1 = abs(out_col - test_col_1);
+	vec4 d4_2 = abs(out_col - test_col_2);
+	vec4 d4_3 = abs(out_col - test_col_3);
+	
+	float d_1 = max(max(d4_1.r, d4_1.g), d4_1.b);
+	float d_2 = max(max(d4_2.r, d4_2.g), d4_2.b);
+	float d_3 = max(max(d4_3.r, d4_3.g), d4_3.b);
+	
+	/*
+	if (out_col.rgb == test_col_1.rgb) {
+		out_col.rgb = replacement_color_1.rgb;
+	}
+	else if (out_col.rgb == test_col_2.rgb) {
+		out_col.rgb = replacement_color_2.rgb;
+	}
+	else if (out_col.rgb == test_col_3.rgb) {
+		out_col.rgb = replacement_color_3.rgb;
+	}
+	*/
+	
+	if (d_1 < 0.01)
+	{
+		out_col.rgb = replacement_color_1.rgb;
+	}
+	
+	else if (d_2 < 0.01)
+	{
+		out_col.rgb = replacement_color_2.rgb;
+	}
+	
+	else if (d_3 < 0.01)
+	{
+		out_col.rgb = replacement_color_3.rgb;
+	}
+	
+	COLOR = out_col;
+}"
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = SubResource( 2 )
+shader_param/test_col_1 = Color( 0.988235, 0.760784, 0.894118, 1 )
+shader_param/replacement_color_1 = Color( 0.988235, 0.760784, 0.894118, 1 )
+shader_param/test_col_2 = Color( 0.988235, 0.431373, 0.8, 1 )
+shader_param/replacement_color_2 = Color( 0.988235, 0.431373, 0.8, 1 )
+shader_param/test_col_3 = Color( 0.0156863, 0.00784314, 0.0156863, 1 )
+shader_param/replacement_color_3 = null
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -51,9 +114,11 @@ margin_left = 315.0
 margin_top = 3.0
 margin_right = 730.0
 margin_bottom = 119.0
-text = "Add NewGame2Set
-Populate player list in lobby
-Add new/load game functionality"
+text = "Populate player list in lobby
+Add new/load game functionality
+Finish player ID system
+Check Server.gd and ServerPlayer.gd
+Players must share colors upon joining"
 __meta__ = {
 "_edit_lock_": true
 }
@@ -357,7 +422,6 @@ anchor_bottom = 1.0
 margin_top = -2.0
 margin_bottom = 5.0
 custom_constants/vseparation = 10
-script = ExtResource( 9 )
 
 [node name="Chat" type="Tabs" parent="OldOnlineSet/MultiplayerTabs"]
 visible = false
@@ -1800,6 +1864,38 @@ margin_bottom = 200.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.25
+
+[node name="PlayerList" type="VBoxContainer" parent="LobbySet/HSplitContainer/Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 38
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="KirbySprite2" parent="LobbySet/HSplitContainer/Panel/PlayerList" instance=ExtResource( 34 )]
+material = SubResource( 3 )
+margin_right = 61.0
+margin_bottom = 0.0
+
+[node name="KirbySprite3" parent="LobbySet/HSplitContainer/Panel/PlayerList" instance=ExtResource( 34 )]
+material = SubResource( 3 )
+margin_top = 38.0
+margin_right = 61.0
+margin_bottom = 38.0
+
+[node name="KirbySprite4" parent="LobbySet/HSplitContainer/Panel/PlayerList" instance=ExtResource( 34 )]
+material = SubResource( 3 )
+margin_top = 76.0
+margin_right = 61.0
+margin_bottom = 76.0
+
+[node name="KirbySprite5" parent="LobbySet/HSplitContainer/Panel/PlayerList" instance=ExtResource( 34 )]
+material = SubResource( 3 )
+margin_top = 114.0
+margin_right = 61.0
+margin_bottom = 114.0
 
 [node name="VSplitContainer" type="VSplitContainer" parent="LobbySet/HSplitContainer"]
 margin_left = 61.0

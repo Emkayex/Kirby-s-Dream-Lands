@@ -34,6 +34,8 @@ var PlayerColors = [
 	"Ice_Primary" : [255, 251, 255], "Ice_Secondary" : [255, 0, 57], "Ice_Tertiary" : [82, 81, 82]}
 ]
 
+var ActivePlayerColors = PlayerColors
+
 
 func load_colors():
 	var data = Global.load_from_json(Global.OPTIONS_DIR, COLORS_FILE)
@@ -63,6 +65,31 @@ func type_changing_set(type):
 func rank_changing_set(rank):
 	rank_changing = rank
 	emit_signal("player_colors_info_changed")
+
+func get_colors(id : int, type : String = "Normal") -> Array:
+	var dict_key : String = type + "_"
+
+	var primary_string : String = ""
+	var secondary_string : String = ""
+	var tertiary_string : String = ""
+
+	# Get RGB value as hex string for primary color
+	for i in range(3):
+		primary_string += "%02x" % ActivePlayerColors[id][dict_key + "Primary"][i]
+
+	# Get RGB value as hex string for secondary color
+	for i in range(3):
+		secondary_string += "%02x" % ActivePlayerColors[id][dict_key + "Secondary"][i]
+
+	# Get RGB value as hex string for tertiary color
+	for i in range(3):
+		tertiary_string += "%02x" % ActivePlayerColors[id][dict_key + "Tertiary"][i]
+
+	var p_color : Color = Color(primary_string)
+	var s_color: Color = Color(secondary_string)
+	var t_color : Color = Color(tertiary_string)
+	
+	return [p_color, s_color, t_color]
 
 func _ready():
 	load_colors()

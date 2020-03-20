@@ -1,8 +1,10 @@
 extends Node
 
+const SERVER_PLAYER = preload("res://Scenes/GameObjects/ServerPlayer.tscn")
+
 const PORT = 5551 # Known unassigned port safe to use
 const MAX_PLAYERS = 4 # Limit the number of allowed players to 4
-const UPNP_SERVICE_NAME = "Kirby's Dream Lands"
+const UPNP_SERVICE_NAME = "Kirby's Dream Lands" # How the services appears in router settings
 
 var online_game = false
 
@@ -27,9 +29,27 @@ func _ready():
 
 # Register a new user when they connect
 func _player_connected(id):
-	var Player = Node.new()
+	var Player = SERVER_PLAYER.instance()
 	Player.name = str(id)
 	add_child(Player)
+	
+	# Assign the network ID variable
+	Player.network_id = id
+	
+	# The server should determine which player ID to assign and distribute it
+	if get_tree().get_network_unique_id() == 1:
+		var current_player_ids = []
+		for child in get_children():
+			current_player_ids.append(child.player_id)
+		
+		# Increment the player_index until an unused ID is reached
+		# The server settings prevent more than 4 players from joining
+		var player_index : int = 0
+		while player_index in current_player_ids:
+			player_index += 1
+		
+		rpc("assign_id", player_index, id)
+	
 	emit_signal("player_connected", id)
 
 
@@ -169,3 +189,9 @@ func send_msg(text):
 
 remotesync func receive_msg(user, text):
 	emit_signal("msg_received", user, text)
+
+
+remotesync func assign_id(player_id : int, network_id : int):
+	for child in get_children():
+		if child.network_id == network_id:
+			child.player_id = player_id
