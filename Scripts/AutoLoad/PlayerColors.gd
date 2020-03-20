@@ -11,6 +11,8 @@ var active_player : int = 0 setget active_player_set # Stores which color set is
 var type_changing : String = "Normal" setget type_changing_set
 var rank_changing : String = "Primary" setget rank_changing_set
 
+var online_color_id : int = 0
+
 
 var PlayerColors = [
 	# Player 1 Colors

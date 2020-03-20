@@ -8,6 +8,7 @@
 [node name="PlayerInfo" type="Control"]
 margin_right = 128.0
 margin_bottom = 41.0
+script = ExtResource( 4 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -17,7 +18,6 @@ material = ExtResource( 3 )
 position = Vector2( 10, 10 )
 z_index = 1
 texture = ExtResource( 1 )
-script = ExtResource( 4 )
 
 [node name="KirbyButton" type="Button" parent="KirbySprite"]
 margin_left = 12.0

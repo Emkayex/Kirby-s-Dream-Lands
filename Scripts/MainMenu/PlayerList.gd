@@ -1,21 +1,28 @@
 extends VBoxContainer
 
-#const MENU_FONT = preload("res://Fonts/MainMenuFont.tres")
+const PLAYER_INFO = preload("res://Scenes/Menus/PlayerInfoNew.tscn")
 
 func _ready():
-	var _err = Server.connect("player_connected", self, "_player_connected")
-	_err = Server.connect("player_disconnected", self, "_player_disconnected")
+	var _err = Server.connect("player_disconnected", self, "_player_disconnected")
+	_err = Server.connect("player_info_received", self, "_player_info_received")
 
 
-func _player_connected(id):
-	pass
-#	var PlayerButton = Button.new()
-#	PlayerButton.set("custom_fonts/font", MENU_FONT)
-#	PlayerButton.text = str(id)
-#	PlayerButton.name = str(id)
-#	PlayerButton.button_mask = 0
-#	PlayerButton.enabled_focus_mode = Control.FOCUS_NONE
-#	add_child(PlayerButton)
+func _player_info_received(player):
+	var add_player : bool = true
+	
+	for child in get_children():
+		if child.name == player.name:
+			add_player = false
+	
+	if add_player:
+		var player_listing = PLAYER_INFO.instance()
+		player_listing.name = str(player.network_id)
+		player_listing.kirby_colors = PlayerColors.get_colors(player.player_id, "Normal")
+		player_listing.network_id = player.network_id
+		player_listing.player_id = player.player_id
+		player_listing.user_name = player.user_name
+		player_listing.kirby_name = player.kirby_name
+		add_child(player_listing)
 
 
 func _player_disconnected(id):

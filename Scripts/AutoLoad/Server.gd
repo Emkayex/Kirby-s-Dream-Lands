@@ -17,6 +17,7 @@ var character_name = ""
 signal player_connected(id)
 signal player_disconnected(id)
 signal msg_received(user, text)
+signal player_info_received(player_node)
 
 func _ready():
 	var _err = get_tree().connect("network_peer_connected", self, "_player_connected")
@@ -195,3 +196,25 @@ remotesync func assign_id(player_id : int, network_id : int):
 	for child in get_children():
 		if child.network_id == network_id:
 			child.player_id = player_id
+	
+	var colors = PlayerColors.PlayerColors[PlayerColors.online_color_id]
+	rpc("set_player_info", get_tree().get_network_unique_id(), network_name, character_name, colors)
+
+
+remotesync func set_player_info(sender_network_id : int, user_name : String, kirby_name : String, colors):
+	var node_to_change : Node
+	
+	# Determine which player's info to update
+	for child in get_children():
+		if child.network_id == sender_network_id:
+			# Update names
+			child.user_name = user_name
+			child.kirby_name = kirby_name
+			
+			# Update color information
+			child.kirby_colors = colors
+			PlayerColors.ActivePlayerColors[child.player_id] = colors
+			
+			node_to_change = child
+	
+	emit_signal("player_info_received", node_to_change)
