@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://Scripts/MainMenu/MainMenu.gd" type="Script" id=1]
 [ext_resource path="res://Sprites/MainMenu/logo_proto.png" type="Texture" id=2]
@@ -32,6 +32,7 @@
 [ext_resource path="res://Scripts/MainMenu/ChatSendButton.gd" type="Script" id=30]
 [ext_resource path="res://Scripts/MainMenu/MirrorLabelText.gd" type="Script" id=31]
 [ext_resource path="res://Scripts/MainMenu/DisconnectButton.gd" type="Script" id=32]
+[ext_resource path="res://Scripts/MainMenu/LineEditLimitCharacters.gd" type="Script" id=33]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.952941, 0.658824, 1, 1 )
@@ -1220,6 +1221,52 @@ __meta__ = {
 }
 state_to_set = "NewGame2"
 
+[node name="NewGame2Set" type="Node2D" parent="."]
+visible = false
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="FileNameLineEdit" type="LineEdit" parent="NewGame2Set"]
+margin_top = 100.0
+margin_right = 306.0
+margin_bottom = 124.0
+custom_fonts/font = ExtResource( 3 )
+align = 1
+placeholder_text = "File Name"
+script = ExtResource( 33 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="Button" parent="NewGame2Set"]
+margin_left = 70.0
+margin_top = 210.0
+margin_right = 104.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Back"
+script = ExtResource( 23 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+state_to_set = "NewGame1"
+
+[node name="AcceptButton" type="Button" parent="NewGame2Set"]
+margin_left = 193.0
+margin_top = 210.0
+margin_right = 236.0
+margin_bottom = 230.0
+custom_fonts/font = ExtResource( 3 )
+text = "Accept"
+script = ExtResource( 29 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+state_to_set = "HostSettings"
+new_game_button = true
+file_name_line_edit = NodePath("../FileNameLineEdit")
+
 [node name="LoadGame1Set" type="Node2D" parent="."]
 visible = false
 __meta__ = {
@@ -1383,7 +1430,7 @@ script = ExtResource( 23 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-state_to_set = "NewGame1"
+state_to_set = "LoadGame1"
 
 [node name="AcceptButton" type="Button" parent="LoadGame2Set"]
 margin_left = 193.0
@@ -1397,6 +1444,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 state_to_set = "HostSettings"
+file_name_line_edit = NodePath("../../NewGame2Set/FileNameLineEdit")
 
 [node name="LoadGameSet" type="Node2D" parent="."]
 visible = false
@@ -1824,6 +1872,8 @@ __meta__ = {
 state_to_set = "Online"
 use_prev_state = true
 server_status_label = NodePath("../../HostSettingsSet/ServerStatusLabel")
+chat_line_edit = NodePath("../HSplitContainer/VSplitContainer/HSplitContainer/ChatLineEdit")
+chat_box = NodePath("../HSplitContainer/VSplitContainer/Panel/RichTextLabel")
 
 [node name="ServerStatusLabel" type="Label" parent="LobbySet"]
 margin_left = 68.0

@@ -4,11 +4,18 @@ const SAVE_DIR = "user://SavedGames"
 
 var SavedGames = {}
 
-var CurrentSaveData = {}
+var CurrentSaveData = {
+	"game_name" : "",
+	"file_name" : ""
+}
 
 func _ready():
 	Global.initialize_folder(SAVE_DIR)
 	retrieve_saved_games()
+
+
+func create_new_file():
+	print("Creating File (STUB)")
 
 
 # Iterate through the saved games list and retrieve all file names and associated games

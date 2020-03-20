@@ -7,4 +7,5 @@ func _ready():
 
 
 func _on_pressed():
-	get_node(chat_line_edit_path).call_deferred("_text_entered")
+	var par = get_node(chat_line_edit_path)
+	par.call("_text_entered", par.get("text"))

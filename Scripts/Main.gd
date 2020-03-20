@@ -42,4 +42,4 @@ func save_video_settings():
 
 
 func start_game():
-	print("Starting Game")
+	print("Starting Game (STUB)")
