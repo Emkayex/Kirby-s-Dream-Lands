@@ -20,9 +20,9 @@ var velocity : Vector2 = Vector2(0, 0)
 var face_r : bool = true
 
 # State variables for driving any internal state machine
-var state : String = "idle"
-var prev_state = ["idle", "idle", "idle"]
-var state_ref : String = "idle" # Used whenever an arbitrary state reference is needed
+var state : String = "Idle"
+var prev_state = ["Idle", "Idle", "Idle"]
+var state_ref : String = "Idle" # Used whenever an arbitrary state reference is needed
 
 # Boolean for indicating if currently in an invincible state
 var invincible : bool = false

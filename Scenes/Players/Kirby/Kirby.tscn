@@ -1,0 +1,17 @@
+[gd_scene format=2]
+
+[node name="Kirby" type="KinematicBody2D"]
+
+[node name="States" type="Node" parent="."]
+
+[node name="Idle" type="Node" parent="States"]
+
+[node name="Walk" type="Node" parent="States"]
+
+[node name="SpriteSet" type="AnimatedSprite" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="MainHitbox" type="CollisionShape2D" parent="."]
+
+[node name="GroundRayCast" type="RayCast2D" parent="."]

@@ -1,6 +1,7 @@
 # Base class for all player controlled characters
 
-extends "res://Scripts/GameObjects/CharacterActor.gd"
+#extends "res://Scripts/GameObjects/CharacterActor.gd"
+extends CharacterActor
 
 class_name Player
 
