@@ -1,16 +1,18 @@
 extends LineEdit
 
-export var allowed_chars : String = \
+
+export var allowed_chars: String = \
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789 "
 
-func _ready():
+
+func _ready() -> void:
 	var _err = connect("text_changed", self, "_on_text_changed")
 
 
-func _on_text_changed(new_text):
-	var cursor_pos : int = caret_position
-	var working_string : String = ""
-	var bad_char : bool = false
+func _on_text_changed(new_text: String) -> void:
+	var cursor_pos: int = caret_position
+	var working_string: String = ""
+	var bad_char: bool = false
 	
 	for ch in new_text:
 		if ch in allowed_chars:

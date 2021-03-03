@@ -1,11 +1,14 @@
 extends "res://Scripts/MainMenu/BasicMenuButton.gd"
 
-export var ID = 0 # Player ID
 
-func _ready():
+export var ID: int = 0 # Player ID
+
+
+func _ready() -> void:
 	pass
 
-func _additional_processing():
+
+func _additional_processing() -> void:
 	Keymap.ActivePlayer = ID
 	
 	var ControlIndicators = "SetControlsSet/ScrollContainer/HBoxContainer/ControlIndicators"

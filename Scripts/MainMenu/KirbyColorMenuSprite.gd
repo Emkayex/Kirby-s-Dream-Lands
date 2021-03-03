@@ -1,11 +1,11 @@
 extends Sprite
 
 
-func _ready():
+func _ready() -> void:
 	set_process(true)
 
 
-func _process(_delta):
+func _process(_delta: float) -> void:
 	var dict_key : String = PlayerColors.type_changing + "_"
 
 	var primary_string : String = ""

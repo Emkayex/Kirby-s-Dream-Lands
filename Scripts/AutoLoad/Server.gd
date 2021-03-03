@@ -1,25 +1,28 @@
 extends Node
 
-const SERVER_PLAYER = preload("res://Scenes/GameObjects/ServerPlayer.tscn")
 
-const PORT = 5551 # Known unassigned port safe to use
-const MAX_PLAYERS = 4 # Limit the number of allowed players to 4
-const UPNP_SERVICE_NAME = "Kirby's Dream Lands" # How the services appears in router settings
+# Each player present on the server gets a SERVER_PLAYER object
+const SERVER_PLAYER := preload("res://Scenes/GameObjects/ServerPlayer.tscn")
 
-var online_game = false
+const PORT: int = 5551 # Known unassigned port safe to use
+const MAX_PLAYERS: int = 4 # Limit the number of allowed players to 4
+const UPNP_SERVICE_NAME: String = "Kirby's Dream Lands" # How the services appears in router settings
 
-var upnp_port_forward = false
-var connected = false
 
-var network_name = ""
-var character_name = ""
+# Booleans for tracking multiplayer status
+var online_game: bool = false
+var host: bool = true
+var connected: bool = false
 
+
+# Signals emitted by this Singleton
 signal player_connected(id)
 signal player_disconnected(id)
-signal msg_received(user, text)
-signal player_info_received(player_node)
+signal server_shutdown()
+signal network_status_update(msg)
 
-func _ready():
+
+func _ready() -> void:
 	var _err = get_tree().connect("network_peer_connected", self, "_player_connected")
 	_err = get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	_err = get_tree().connect("connected_to_server", self, "_connected_ok")
@@ -28,37 +31,26 @@ func _ready():
 	pause_mode = PAUSE_MODE_PROCESS
 
 
-# Register a new user when they connect
-func _player_connected(id):
-	var Player = SERVER_PLAYER.instance()
-	Player.name = str(id)
-	add_child(Player)
+# When a player connected, create a SERVER_PLAYER object for them and add it to the scene tree
+func _player_connected(id: int) -> void:
+	var ServerPlayer = SERVER_PLAYER.instance()
+	ServerPlayer.name = str(id)
+	ServerPlayer.network_id = id # Set the network ID variable
+	ServerPlayer.set_network_master(id) # Set the connecting player to be the master of their own object
+	add_child(ServerPlayer)
 	
-	# Assign the network ID variable
-	Player.network_id = id
-	
-	# The server should determine which player ID to assign and distribute it
-	if get_tree().get_network_unique_id() == 1:
-		var current_player_ids = []
-		for child in get_children():
-			current_player_ids.append(child.player_id)
-		
-		# Increment the player_index until an unused ID is reached
-		# The server settings prevent more than 4 players from joining
-		var player_index : int = 0
-		while player_index in current_player_ids:
-			player_index += 1
-		
-		rpc("assign_id", player_index, id)
+	# Previously would assign a player ID to each connecting player (0 through 3)
+	# However, that adds extra complexity
+	# Since player order does not matter (besides the server who is always 1) sort player order by network ID
 	
 	emit_signal("player_connected", id)
 
 
-# Unregister a user when they disconnect
-func _player_disconnected(id):
-	for Player in get_children():
-		if Player.name == str(id):
-			remove_child(Player)
+# Unregister a player and remove them from the players list when someone disconnects
+func _player_disconnected(id: int) -> void:
+	for ServerPlayer in get_children():
+		if ServerPlayer.network_id == id:
+			remove_child(ServerPlayer)
 			emit_signal("player_disconnected", id)
 
 
@@ -70,151 +62,12 @@ func _connected_fail():
 	pass
 
 
+# Unregister all players if the server goes down
 func _server_disconnected():
 	get_tree().set_network_peer(null)
 	connected = false
 	
-	# Must unregister all players if server disconnects
-	for i in get_children():
-		_player_disconnected(int(i.name))
-
-
-# Attempt to start a server on default port with limited number of clients
-func start_server(NetworkStatusNode, user_name, kirby_name):
-	# First check for a user name and Kirby name
-	if user_name == "":
-		NetworkStatusNode.text = "Enter a User Name"
-		return 1
-	if kirby_name == "":
-		NetworkStatusNode.text = "Enter a Kirby Name"
-		return 1
+	for ServerPlayer in get_children():
+		_player_disconnected(ServerPlayer.network_id)
 	
-	# Set user name and character name
-	network_name = user_name
-	character_name = kirby_name
-	
-	# First open the UPNP port if requested by the user
-	var upnp_successful = false
-	if upnp_port_forward:
-		var upnp = UPNP.new()
-		upnp.discover()
-		
-		# Add port mappings
-		if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
-			var udp_status = upnp.add_port_mapping(PORT, PORT, UPNP_SERVICE_NAME, "UDP")
-			var tcp_status = upnp.add_port_mapping(PORT, PORT, UPNP_SERVICE_NAME, "TCP")
-			
-			# Check return codes from adding port mappings
-			if (udp_status == upnp.UPNP_RESULT_SUCCESS) and (tcp_status == upnp.UPNP_RESULT_SUCCESS):
-				upnp_successful = true
-	
-	
-	# Host the server
-	var peer = NetworkedMultiplayerENet.new()
-	var err = peer.create_server(PORT, MAX_PLAYERS) # Check for errors when starting server
-	if (err != OK):
-		NetworkStatusNode.text = "Error Starting Server"
-		return 1
-	else:
-		get_tree().set_network_peer(peer)
-		
-		_player_connected(1) # Master always has an ID of 1
-		
-		if upnp_port_forward and not(upnp_successful):
-			NetworkStatusNode.text = "Server Started, Port Forward Failed"
-		else:
-			NetworkStatusNode.text = "Server Started"
-		return 0
-
-
-func close_server(NetworkStatusNode):
-	get_tree().set_network_peer(null)
-	NetworkStatusNode.text = "Disconnected"
-	
-	# Must unregister all players if server stops hosting
-	for i in get_children():
-		_player_disconnected(int(i.name))
-	
-	# Always attempt to close any ports opened by the program as a security measure
-	var upnp = UPNP.new()
-	upnp.discover()
-	
-	# Delete port mappings
-	if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
-		upnp.delete_port_mapping(PORT, "UDP")
-		upnp.delete_port_mapping(PORT, "TCP")
-
-
-func connect_to_ip(ip, NetworkStatusNode, user_name, kirby_name):
-	# Perform error checking and return error status if necessary
-	if user_name == "":
-		NetworkStatusNode.text = "Enter a User Name"
-		return 1
-	if kirby_name == "":
-		NetworkStatusNode.text = "Enter a Kirby Name"
-		return 1
-	if not(ip.is_valid_ip_address()):
-		NetworkStatusNode.text = "Invalid IP Address"
-		return 1
-	
-	# Set user name and character name
-	network_name = user_name
-	character_name = kirby_name
-	
-	# Establish connection	
-	var peer = NetworkedMultiplayerENet.new()
-	var error = peer.create_client(ip, PORT)
-	
-	if (error == OK):
-		get_tree().set_network_peer(peer)
-		NetworkStatusNode.text = "Connected"
-		_player_connected(get_tree().get_network_unique_id())
-		return 0
-	else:
-		NetworkStatusNode.text = "No Server Found"
-		return 1
-
-
-func disconnect_from_server(NetworkStatusNode):
-	get_tree().set_network_peer(null)
-	NetworkStatusNode.text = "Disconnected"
-	
-	# Must unregister all players if server stops hosting
-	for i in get_children():
-		_player_disconnected(int(i.name))
-
-
-func send_msg(text):
-	rpc("receive_msg", network_name, text)
-
-
-remotesync func receive_msg(user, text):
-	emit_signal("msg_received", user, text)
-
-
-remotesync func assign_id(player_id : int, network_id : int):
-	for child in get_children():
-		if child.network_id == network_id:
-			child.player_id = player_id
-	
-	var colors = PlayerColors.PlayerColors[PlayerColors.online_color_id]
-	rpc("set_player_info", get_tree().get_network_unique_id(), network_name, character_name, colors)
-
-
-remotesync func set_player_info(sender_network_id : int, user_name : String, kirby_name : String, colors):
-	var node_to_change : Node
-	
-	# Determine which player's info to update
-	for child in get_children():
-		if child.network_id == sender_network_id:
-			# Update names
-			child.user_name = user_name
-			child.kirby_name = kirby_name
-			
-			# Update color information
-			child.kirby_colors = colors
-			PlayerColors.ActivePlayerColors[child.player_id] = colors
-			
-			node_to_change = child
-	
-	emit_signal("player_info_received", node_to_change)
+	emit_signal("server_shutdown")

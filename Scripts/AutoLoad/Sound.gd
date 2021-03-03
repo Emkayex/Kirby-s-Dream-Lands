@@ -1,14 +1,16 @@
 extends Node
 
-const VOLUME_FILE = "volume.dedede"
-const MAX_SLIDER_VALUE = 10000
 
-func _ready():
+const VOLUME_FILE: String = "volume.dedede"
+const MAX_SLIDER_VALUE : int= 10000
+
+
+func _ready() -> void:
 	Global.initialize_folder(Global.OPTIONS_DIR)
 	load_volumes()
 
 
-func load_volumes():
+func load_volumes() -> void:
 	var data = Global.load_from_json(Global.OPTIONS_DIR, VOLUME_FILE)
 	
 	if data.exists:
@@ -22,7 +24,7 @@ func load_volumes():
 
 
 
-func save_volumes():
+func save_volumes() -> void:
 	# Create an array of audio bus values where indices correspond to bus indices
 	var volume_array = []
 	

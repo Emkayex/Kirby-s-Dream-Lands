@@ -1,12 +1,14 @@
 extends Control
 
-var network_id : int = -1
-var player_id : int = 0
-var kirby_colors = []
-var user_name : String = ""
-var kirby_name : String = ""
 
-func _ready():
+var network_id: int = -1
+var player_id: int = 0
+var kirby_colors: Array = []
+var user_name: String = ""
+var kirby_name: String = ""
+
+
+func _ready() -> void:
 	var _err = $KirbySprite/KirbyButton.connect("pressed", self, "_on_kirby_pressed")
 	
 	if get_tree().get_network_unique_id() != 1:
@@ -23,9 +25,9 @@ func _ready():
 	$KirbySprite/KirbyButton.text = kirby_name
 
 
-func _on_kirby_pressed():
+func _on_kirby_pressed() -> void:
 	$KirbySprite/KirbyButton/VBoxContainer.visible = not($KirbySprite/KirbyButton/VBoxContainer.visible)
 
 
-func _on_kick_pressed():
+func _on_kick_pressed() -> void:
 	print("Kick pressed")

@@ -1,25 +1,27 @@
 extends Node
 
-const SAVE_DIR = "user://SavedGames"
 
-var SavedGames = {}
+const SAVE_DIR: String = "user://SavedGames"
 
-var CurrentSaveData = {
+var SavedGames: Dictionary = {}
+
+var CurrentSaveData: Dictionary = {
 	"game_name" : "",
 	"file_name" : ""
 }
 
-func _ready():
+
+func _ready() -> void:
 	Global.initialize_folder(SAVE_DIR)
 	retrieve_saved_games()
 
 
-func create_new_file():
+func create_new_file() -> void:
 	print("Creating File (STUB)")
 
 
 # Iterate through the saved games list and retrieve all file names and associated games
-func retrieve_saved_games():
+func retrieve_saved_games() -> void:
 	SavedGames = {} # Start by clearing the current list of saved games
 	
 	# Open the SavedGames directory

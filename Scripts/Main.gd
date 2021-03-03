@@ -1,9 +1,11 @@
 extends Node
 
-# Main will manage all settings not already handled by a singleton (due to not needing additional functions)
-const VIDEO_FILE = "video.kracko"
 
-func _ready():
+# Main will manage all settings not already handled by a singleton (due to not needing additional functions)
+const VIDEO_FILE: String = "video.kracko"
+
+
+func _ready() -> void:
 	Global.Main = self
 	Global.spawn_huds()
 	
@@ -15,11 +17,11 @@ func _ready():
 	load_video_settings()
 
 
-func _fps_timer_timeout():
+func _fps_timer_timeout() -> void:
 	$FPSLabel.text = str(Engine.get_frames_per_second())
 
 
-func load_video_settings():
+func load_video_settings() -> void:
 	var data = Global.load_from_json(Global.OPTIONS_DIR, VIDEO_FILE)
 	
 	# Set video settings based upon parsed dict
@@ -32,7 +34,7 @@ func load_video_settings():
 		save_video_settings()
 
 
-func save_video_settings():
+func save_video_settings() -> void:
 	# Assemble a dictionary of the video settings
 	var video_dict = {}
 	video_dict["display_fps"] = $FPSLabel.visible
@@ -41,5 +43,5 @@ func save_video_settings():
 	Global.save_as_json(Global.OPTIONS_DIR, VIDEO_FILE, video_dict)
 
 
-func start_game():
+func start_game() -> void:
 	print("Starting Game (STUB)")

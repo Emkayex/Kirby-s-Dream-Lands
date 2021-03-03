@@ -1,15 +1,17 @@
 extends Button
 
-export var state_to_set : String = "MainMenu"
-export var server_status_label : NodePath
-export var user_name_entry_field : NodePath
-export var kirby_name_entry_field : NodePath
 
-func _ready():
+export var state_to_set: String = "MainMenu"
+export var server_status_label: NodePath
+export var user_name_entry_field: NodePath
+export var kirby_name_entry_field: NodePath
+
+
+func _ready() -> void:
 	var _err = connect("pressed", self, "_on_pressed")
 
 
-func _on_pressed():
+func _on_pressed() -> void:
 	var status = Server.start_server(get_node(server_status_label),\
 			get_node(user_name_entry_field).get("text"),\
 			get_node(kirby_name_entry_field).get("text"))
