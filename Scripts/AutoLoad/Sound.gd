@@ -2,7 +2,7 @@ extends Node
 
 
 const VOLUME_FILE: String = "volume.dedede"
-const MAX_SLIDER_VALUE : int= 10000
+const MAX_SLIDER_VALUE: int = 10000
 
 
 func _ready() -> void:
