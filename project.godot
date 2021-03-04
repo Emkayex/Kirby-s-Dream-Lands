@@ -32,6 +32,8 @@ Sound="*res://Scripts/AutoLoad/Sound.gd"
 SaveData="*res://Scripts/AutoLoad/SaveData.gd"
 Keymap="*res://Scripts/AutoLoad/Keymap.gd"
 PlayerColors="*res://Scripts/AutoLoad/PlayerColors.gd"
+PartyManager="*res://Scripts/AutoLoad/party_manager.gd"
+CustomStatus="*res://Scripts/AutoLoad/custom_status.gd"
 
 [display]
 
